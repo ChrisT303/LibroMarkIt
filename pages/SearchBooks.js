@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 
 import Auth from "../utils/auth";
-import { searchGoogleBooks } from "../utils/API";
-import { saveBookIds, getSavedBookIds } from "../utils/localStorage";
+import { searchGoogleBooks } from "../utils/api";
+import { saveBookIds, getSavedBookIds } from "../utils/localstorage";
 import { useMutation } from "@apollo/client";
 import { SAVE_BOOK } from "../utils/mutations";
-import Image from 'next/image';
-
+import Image from "next/image";
 
 const SearchBooks = () => {
   const [searchedBooks, setSearchedBooks] = useState([]);
@@ -15,7 +14,6 @@ const SearchBooks = () => {
   const [savedBookIds, setSavedBookIds] = useState(getSavedBookIds());
 
   const [saveBook, { error }] = useMutation(SAVE_BOOK);
-
 
   useEffect(() => {
     return () => saveBookIds(savedBookIds);
@@ -105,7 +103,7 @@ const SearchBooks = () => {
           </form>
         </div>
       </div>
-  
+
       <div className="container mx-auto px-4 py-8">
         <h2>
           {searchedBooks.length
@@ -159,8 +157,6 @@ const SearchBooks = () => {
       </div>
     </>
   );
-  
-
 };
 
 export default SearchBooks;

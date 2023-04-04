@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import SignUpForm from "./SignupForm";
 import LoginForm from "./LoginForm";
 
@@ -13,20 +13,20 @@ const AppNavbar = () => {
       <header className="bg-gray-900 text-gray-100">
         <div className="container mx-auto px-4 py-3">
           <nav className="flex items-center justify-between">
-            <Link to="/" className="text-xl font-semibold">
+            <Link href="/" className="text-xl font-semibold">
               Google Books Search
             </Link>
             <div className="hidden md:block">
               <ul className="flex items-center space-x-4">
                 <li>
-                  <Link to="/" className="hover:text-gray-300">
+                  <Link href="/" className="hover:text-gray-300">
                     Search For Books
                   </Link>
                 </li>
                 {Auth.loggedIn() ? (
                   <>
                     <li>
-                      <Link to="/saved" className="hover:text-gray-300">
+                      <Link href="/saved" className="hover:text-gray-300">
                         See Your Books
                       </Link>
                     </li>
