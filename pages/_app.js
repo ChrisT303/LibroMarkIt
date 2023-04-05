@@ -1,5 +1,6 @@
 import React from 'react';
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client';
+import '../styles/globals.css';
 import { setContext } from '@apollo/client/link/context';
 import Navbar from '../components/Navbar';
 

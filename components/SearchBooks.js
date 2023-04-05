@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import Auth from "../utils/auth";
 import { searchGoogleBooks } from "../utils/api";
-import { saveBookIds, getSavedBookIds } from "../utils/localstorage";
+import { saveBookIds, getSavedBookIds } from "../utils/localStorage";
 import { useMutation } from "@apollo/client";
 import { SAVE_BOOK } from "../utils/mutations";
 import Image from "next/image";

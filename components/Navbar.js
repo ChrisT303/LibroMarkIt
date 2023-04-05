@@ -2,11 +2,17 @@ import React, { useState } from "react";
 import Link from "next/link";
 import SignUpForm from "./SignupForm";
 import LoginForm from "./LoginForm";
+import { useRouter } from 'next/router';
+
 
 import Auth from "../utils/auth";
 
 const AppNavbar = () => {
   const [showModal, setShowModal] = useState(false);
+  const [activeTab, setActiveTab] = useState("login");
+
+  const router = useRouter();
+
 
   return (
     <>
