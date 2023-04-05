@@ -4,7 +4,6 @@ import SearchBooks from "../components/SearchBooks";
 export default function Home() {
   return (
     <div>
-      <Navbar />
       <SearchBooks />
     </div>
   );
