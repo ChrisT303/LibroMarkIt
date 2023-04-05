@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import Link from "next/link";
 import SignUpForm from "./SignupForm";
 import LoginForm from "./LoginForm";
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 
 
-import Auth from "../utils/auth";
+import Auth from "../server/utils/auth";
 
 const AppNavbar = () => {
   const [showModal, setShowModal] = useState(false);
@@ -13,10 +13,9 @@ const AppNavbar = () => {
 
   const router = useRouter();
 
-
   return (
     <>
-      <header className="bg-gray-900 text-gray-100">
+          <header className="bg-gray-900 text-gray-100">
         <div className="container mx-auto px-4 py-3">
           <nav className="flex items-center justify-between">
             <Link href="/" className="text-xl font-semibold">
@@ -60,6 +59,7 @@ const AppNavbar = () => {
           </nav>
         </div>
       </header>
+
       <div
         className={`${
           showModal ? "fixed" : "hidden"

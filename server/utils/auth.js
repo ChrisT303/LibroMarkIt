@@ -1,4 +1,6 @@
 import decode from 'jwt-decode';
+import jwt from 'jsonwebtoken';
+
 
 class AuthService {
   getProfile() {
@@ -7,7 +9,7 @@ class AuthService {
 
   loggedIn() {
     const token = this.getToken();
-    return !!token && !this.isTokenExpired(token); // handwaiving here
+    return !!token && !this.isTokenExpired(token); 
   }
 
   isTokenExpired(token) {
@@ -41,6 +43,24 @@ class AuthService {
       window.location.assign('/');
     }
   }
+  signToken(userData) {
+    const secret = 'your-secret-key';
+    const token = jwt.sign({ data: userData }, secret, { expiresIn: '1h' });
+    return token;
+  }
+  verifyToken(token) {
+    try {
+      const decoded = jwt.verify(token, 'your-secret-key');
+      return decoded.data;
+    } catch (err) {
+      console.log(err);
+      return null;
+    }
+  }
+
+
 }
 
-export default new AuthService();
+const authService = new AuthService(); 
+
+export default authService; 

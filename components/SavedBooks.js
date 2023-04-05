@@ -1,10 +1,10 @@
 import React from "react";
 import { useQuery, useMutation } from "@apollo/client";
 
-import { GET_ME } from "../utils/queries";
-import Auth from "../utils/auth";
-import { removeBookId, saveBookIds } from "../utils/localStorage";
-import { REMOVE_BOOK } from "../utils/mutations";
+import { GET_ME } from "../server/utils/queries";
+import Auth from "../server/utils/auth";
+import { removeBookId, saveBookIds } from "../server/utils/localStorage";
+import { REMOVE_BOOK } from "../server/utils/mutations";
 import Image from "next/image";
 
 const SavedBooks = () => {

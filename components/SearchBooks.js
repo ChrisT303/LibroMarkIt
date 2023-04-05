@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 
-import Auth from "../utils/auth";
-import { searchGoogleBooks } from "../utils/api";
-import { saveBookIds, getSavedBookIds } from "../utils/localStorage";
+import Auth from "../server/utils/auth";
+import { searchGoogleBooks } from "../server/utils/api";
+import { saveBookIds, getSavedBookIds } from "../server/utils/localStorage";
 import { useMutation } from "@apollo/client";
-import { SAVE_BOOK } from "../utils/mutations";
+import { SAVE_BOOK } from "../server/utils/mutations";
 import Image from "next/image";
 
 const SearchBooks = () => {

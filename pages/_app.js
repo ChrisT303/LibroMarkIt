@@ -5,7 +5,7 @@ import { setContext } from '@apollo/client/link/context';
 import Navbar from '../components/Navbar';
 
 const httpLink = createHttpLink({
-  uri: '/graphql',
+  uri: '/api/graphql', 
 });
 
 const authLink = setContext((_, { headers }) => {

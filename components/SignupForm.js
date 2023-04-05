@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
 
-import { ADD_USER } from "../utils/mutations";
-import Auth from "../utils/auth";
+import { ADD_USER } from "../server/utils/mutations";
+import Auth from "../server/utils/auth";
 
 const SignupForm = () => {
   const [userFormData, setUserFormData] = useState({
@@ -33,6 +33,7 @@ const SignupForm = () => {
       const { data } = await addUser({
         variables: { ...userFormData },
       });
+      console.log("addUser mutation called"); 
 
       Auth.login(data.addUser.token);
     } catch (err) {
@@ -47,14 +48,13 @@ const SignupForm = () => {
     });
   };
 
+  
+
+
 
   return (
     <>
-      <form
-        className="needs-validation"
-        noValidate
-        onSubmit={handleFormSubmit}
-      >
+      <form className="needs-validation" onSubmit={handleFormSubmit}>
         {showAlert && (
           <div
             className="bg-red-500 text-white p-4 mb-4 rounded flex items-center justify-between"
@@ -70,7 +70,7 @@ const SignupForm = () => {
             </button>
           </div>
         )}
-  
+
         <div className="mb-4">
           <label htmlFor="username" className="block mb-2">
             Username
@@ -87,7 +87,7 @@ const SignupForm = () => {
           />
           <div className="invalid-feedback">Username is required!</div>
         </div>
-  
+
         <div className="mb-4">
           <label htmlFor="email" className="block mb-2">
             Email
@@ -104,7 +104,7 @@ const SignupForm = () => {
           />
           <div className="invalid-feedback">Email is required!</div>
         </div>
-  
+
         <div className="mb-4">
           <label htmlFor="password" className="block mb-2">
             Password
@@ -137,8 +137,6 @@ const SignupForm = () => {
       </form>
     </>
   );
-  
-
 };
 
-export default SignupForm
+export default SignupForm;
