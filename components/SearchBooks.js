@@ -122,6 +122,8 @@ const SearchBooks = () => {
                     src={book.image}
                     alt={`The cover for ${book.title}`}
                     className="w-full h-48 object-cover rounded-t"
+                    width={150} 
+                    height={200} 
                   />
                 ) : null}
                 <div className="mt-4">
