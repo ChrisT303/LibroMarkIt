@@ -9,7 +9,7 @@ const httpLink = createHttpLink({
 });
 
 const authLink = setContext((_, { headers }) => {
-  const token = localStorage.getItem('id_token');
+  const token = typeof window !== 'undefined' ? localStorage.getItem('id_token') : null;
   return {
     headers: {
       ...headers,
@@ -33,4 +33,5 @@ function MyApp({ Component, pageProps }) {
 }
 
 export default MyApp;
+
 

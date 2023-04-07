@@ -1,60 +1,43 @@
-import React, { useState, useEffect } from "react";
-import { useRouter } from "next/router";
+import React, { useState } from "react";
+import Link from "next/link";
 import SignUpForm from "./SignupForm";
 import LoginForm from "./LoginForm";
+import { useRouter } from "next/router";
 
 import Auth from "../server/utils/auth";
 
 const AppNavbar = () => {
   const [showModal, setShowModal] = useState(false);
   const [activeTab, setActiveTab] = useState("login");
-  const [isMounted, setIsMounted] = useState(false);
 
-  const loggedIn = Auth.loggedIn();
   const router = useRouter();
 
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
+  const ChildHome = () => <a>LibroMarkit</a>
+  const ChildSearch = () => <a> Search For Books</a>
+  const ChildSaved = () => <a>  See Your Books</a>
 
-  const navigate = (url) => {
-    router.push(url);
-  };
-
-  if (!isMounted) {
-    return null;
-  }
 
   return (
     <>
       <header className="bg-gray-900 text-gray-100">
         <div className="container mx-auto px-4 py-3">
           <nav className="flex items-center justify-between">
-            <button
-              className="text-xl font-semibold"
-              onClick={() => navigate("/")}
-            >
-              LibroMarkit
-            </button>
+            <Link href="/" className="text-xl font-semibold">
+                <ChildHome />
+            </Link>
             <div className="hidden md:block">
               <ul className="flex items-center space-x-4">
                 <li>
-                  <button
-                    className="hover:text-gray-300"
-                    onClick={() => navigate("/")}
-                  >
-                    Search For Books
-                  </button>
+                  <Link href="/" className="hover:text-gray-300">
+                   <ChildSearch />
+                  </Link>
                 </li>
-                {loggedIn ? (
+                {Auth.loggedIn() ? (
                   <>
                     <li>
-                      <button
-                        className="hover:text-gray-300"
-                        onClick={() => navigate("/saved")}
-                      >
-                        See Your Books
-                      </button>
+                      <Link href="/saved" className="hover:text-gray-300">
+                      <ChildSaved />
+                      </Link>
                     </li>
                     <li>
                       <button
@@ -80,7 +63,6 @@ const AppNavbar = () => {
           </nav>
         </div>
       </header>
-
 
       <div
         className={`${
