@@ -51,7 +51,8 @@ const AppNavbar = () => {
                     <li>
                       <button
                         className="hover:text-gray-300"
-                        onClick={() => navigate("/savedbooks")}                        >
+                        onClick={() => navigate("/savedbooks")}
+                      >
                         See Your Books
                       </button>
                     </li>
@@ -79,54 +80,74 @@ const AppNavbar = () => {
           </nav>
         </div>
       </header>
-
-
+      <div className="relative z-50">
+    <div
+      className={`${
+        showModal ? "block" : "hidden"
+      } fixed z-40 inset-0 overflow-y-auto`}
+      aria-labelledby="modal-title"
+      role="dialog"
+      aria-modal="true"
+    >
       <div
-        className={`${
-          showModal ? "fixed" : "hidden"
-        } z-10 inset-0 overflow-y-auto`}
-        aria-labelledby="modal-title"
-        role="dialog"
-        aria-modal="true"
+        className="flex items-center justify-center min-h-screen"
+        onClick={(e) => {
+          if (e.target === e.currentTarget) {
+            setShowModal(false);
+          }
+        }}
       >
-        <div className="flex items-end justify-center min-h-screen">
-          <div className="w-full max-w-2xl mt-10 bg-white rounded-lg px-8 py-6">
-            <div className="w-full">
-              <div className="border-b border-gray-200">
-                <nav className="-mb-px flex">
-                  <button
-                    className={`w-1/2 py-4 px-1 text-center border-b-2 font-medium text-sm ${
-                      activeTab === "login"
-                        ? "border-blue-500 text-blue-600"
-                        : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
-                    }`}
-                    onClick={() => setActiveTab("login")}
-                  >
-                    Login
-                  </button>
-                  <button
-                    className={`w-1/2 py-4 px-1 text-center border-b-2 font-medium text-sm ${
-                      activeTab === "signup"
-                        ? "border-blue-500 text-blue-600"
-                        : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
-                    }`}
-                    onClick={() => setActiveTab("signup")}
-                  >
-                    Sign Up
-                  </button>
-                </nav>
-              </div>
-              <div className="mt-6">
-                {activeTab === "login" ? (
-                  <LoginForm handleModalClose={() => setShowModal(false)} />
-                ) : (
-                  <SignUpForm handleModalClose={() => setShowModal(false)} />
-                )}
-              </div>
+        <div className="w-full max-w-2xl mt-10 bg-white rounded-lg px-8 py-6">
+          <div className="w-full">
+            <div className="border-b border-gray-200">
+              <nav className="-mb-px flex">
+                <button
+                  className={`w-1/2 py-4 px-1 text-center border-b-2 font-medium text-sm ${
+                    activeTab === "login"
+                      ? "border-blue-500 text-blue-600"
+                      : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                  }`}
+                  onClick={() => setActiveTab("login")}
+                >
+                  Login
+                </button>
+                <button
+                  className={`w-1/2 py-4 px-1 text-center border-b-2 font-medium text-sm ${
+                    activeTab === "signup"
+                      ? "border-blue-500 text-blue-600"
+                      : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                  }`}
+                  onClick={() => setActiveTab("signup")}
+                >
+                  Sign Up
+                </button>
+              </nav>
+            </div>
+            <div className="mt-6">
+              {activeTab === "login" ? (
+                <LoginForm handleModalClose={() => setShowModal(false)} />
+              ) : (
+                <SignUpForm handleModalClose={() => setShowModal(false)} />
+              )}
             </div>
           </div>
         </div>
       </div>
+    </div>
+    {showModal && (
+      <>
+        <div
+          className="fixed z-30 inset-0 bg-gray-500 opacity-75"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setShowModal(false);
+            }
+          }}
+        ></div>
+      </>
+    )}
+  </div>
+
     </>
   );
 };
