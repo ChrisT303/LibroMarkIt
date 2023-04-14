@@ -28,9 +28,11 @@ const SignupForm = () => {
     setUserFormData({ ...userFormData, [name]: value });
 
     if (name === "email") {
-      setEmailValid(value.trim().length > 0);
+      setEmailValid(value.trim().length > 0 && value.includes("@") && value.includes("."));
     } else if (name === "password") {
       setPasswordValid(value.trim().length > 0);
+    } else if (name === "username" && value.trim().length > 0) {
+      setUsernameError(false);
     }
   };
 
@@ -113,8 +115,11 @@ const SignupForm = () => {
             value={userFormData.email}
             required
           />
-        {!emailValid && <div className="text-xs text-red-600">Email is required!</div>}
-
+          {!emailValid && (
+            <div className="text-xs text-red-600">
+              Please enter a valid email address!
+            </div>
+          )}
         </div>
 
         <div className="mb-4">
