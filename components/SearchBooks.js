@@ -90,7 +90,7 @@ const SearchBooks = () => {
                   value={searchInput}
                   onChange={(e) => setSearchInput(e.target.value)}
                   type="text"
-                  className="w-full p-2 border border-gray-300 rounded"
+                  className="w-full p-2 border border-gray-300 rounded text-black"
                   placeholder="Search for a book"
                 />
               </div>
