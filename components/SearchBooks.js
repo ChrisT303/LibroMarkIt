@@ -70,7 +70,7 @@ const SearchBooks = () => {
       if (!data) {
         throw new Error("something went wrong!");
       }
-      setSavedBooks([...savedBooks, data.saveBook]);
+      setSavedBookIds([...savedBookIds, bookToSave.bookId]);
     } catch (err) {
       console.error(err);
     }
