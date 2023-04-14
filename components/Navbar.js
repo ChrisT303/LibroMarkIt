@@ -51,8 +51,7 @@ const AppNavbar = () => {
                     <li>
                       <button
                         className="hover:text-gray-300"
-                        onClick={() => navigate("/saved")}
-                      >
+                        onClick={() => navigate("/savedbooks")}                        >
                         See Your Books
                       </button>
                     </li>

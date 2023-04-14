@@ -15,25 +15,27 @@ const SavedBooks = () => {
 
   const handleDeleteBook = async (bookId) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
-
+  
     if (!token) {
       return false;
     }
-
+  
     try {
       const response = await removeBook({
         variables: { bookId },
       });
-
+  
       if (!response) {
         throw new Error("something went wrong!");
       }
-
+  
       removeBookId(bookId);
+      router.push("/savedbooks");
     } catch (err) {
       console.error(err);
     }
   };
+  
 
   if (loading) {
     return <h2>LOADING...</h2>;
