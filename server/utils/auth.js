@@ -2,6 +2,8 @@ import decode from 'jwt-decode';
 import jwt from 'jsonwebtoken';
 
 
+const JWT_SECRET = process.env.JWT_SECRET; 
+
 class AuthService {
   getProfile() {
     return decode(this.getToken());
@@ -44,13 +46,12 @@ class AuthService {
     }
   }
   signToken(userData) {
-    const secret = 'your-secret-key';
-    const token = jwt.sign({ data: userData }, secret, { expiresIn: '1h' });
+    const token = jwt.sign({ data: userData }, JWT_SECRET, { expiresIn: '1h' });
     return token;
   }
   verifyToken(token) {
     try {
-      const decoded = jwt.verify(token, 'your-secret-key');
+      const decoded = jwt.verify(token, JWT_SECRET);
       return decoded.data;
     } catch (err) {
       console.log(err);

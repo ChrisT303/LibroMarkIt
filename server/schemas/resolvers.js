@@ -20,25 +20,25 @@ const resolvers = {
     },
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
-
+  
       if (!user) {
         throw new AuthenticationError("No user found");
       }
-
+  
       const correctPw = await user.isCorrectPassword(password);
-
+  
       if (!correctPw) {
         throw new AuthenticationError("Incorrect credentials");
       }
-
+  
       const token = authService.signToken(user);
-
+  
       return { token, user };
     },
     saveBook: async (parent, { input }, context) => {
       const token = context.req.headers.authorization.split(' ').pop();
       const user = authService.verifyToken(token);
-
+  
       if (user) {
         const updatedUser = await User.findByIdAndUpdate(
           { _id: user._id },
@@ -51,11 +51,11 @@ const resolvers = {
       }
       throw new AuthenticationError("You need to be logged in first.");
     },
-
+  
     removeBook: async (parent, { bookId }, context) => {
       const token = context.req.headers.authorization.split(' ').pop();
       const user = authService.verifyToken(token);
-
+  
       if (user) {
         const updatedUser = await User.findByIdAndUpdate(
           { _id: user._id },
@@ -69,7 +69,10 @@ const resolvers = {
       }
       throw new AuthenticationError("Not logged in");
     },
+  
+ 
   },
+  
 };
 
 export default resolvers;

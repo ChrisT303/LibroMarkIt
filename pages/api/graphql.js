@@ -1,25 +1,31 @@
 import { ApolloServer } from "apollo-server-micro";
 import { typeDefs, resolvers } from "../../server/schemas";
-import db from "../../server/config/connections";
+import dbConnect from "../../server/utils/dbConnect"; // <-- Make sure you import dbConnect
 import AuthService from "../../server/utils/auth";
 
 const server = new ApolloServer({
   typeDefs,
   resolvers,
   context: ({ req }) => {
+    if (!req.headers) {
+      console.warn("Request has no headers, skipping context.");
+      return {};
+    }
+    console.log("Request headers:", req.headers);
     const token = req.headers.authorization
       ? req.headers.authorization.split(" ").pop()
       : "";
+    console.log("Token:", token);
     const user = AuthService.verifyToken(token);
-    return { user };
+    console.log("User:", user);
+    return { req, user };
   },
 });
 
 const startServer = server.start();
 
 export default async function handler(req, res) {
-
-  console.log("Request received:", req.method, req.url); 
+  console.log("Request received:", req.method, req.url);
 
   if (req.method === "OPTIONS") {
     res.end();
@@ -27,10 +33,8 @@ export default async function handler(req, res) {
   }
 
   await startServer;
-  await db.once("open", () => {
-    console.log(`Connected to the database.`);
-  });
-  console.log('Server is starting up...');
+  await dbConnect(); // <-- Use the dbConnect function here
+  console.log("Server is starting up...");
 
   return server.createHandler({ path: "/api/graphql" })(req, res);
 }
