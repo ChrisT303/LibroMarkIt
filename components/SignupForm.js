@@ -12,12 +12,26 @@ const SignupForm = () => {
   });
   const [validated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+  const [emailValid, setEmailValid] = useState(true);
+  const [passwordValid, setPasswordValid] = useState(true);
+  const [usernameError, setUsernameError] = useState(false);
 
   const [addUser, { error }] = useMutation(ADD_USER);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
+
+    if (name === "username") {
+      setUsernameError(value.trim().length === 0);
+    }
+
     setUserFormData({ ...userFormData, [name]: value });
+
+    if (name === "email") {
+      setEmailValid(value.trim().length > 0);
+    } else if (name === "password") {
+      setPasswordValid(value.trim().length > 0);
+    }
   };
 
   const handleFormSubmit = async (event) => {
@@ -33,7 +47,6 @@ const SignupForm = () => {
       const { data } = await addUser({
         variables: { ...userFormData },
       });
-      console.log("addUser mutation called"); 
 
       Auth.login(data.addUser.token);
     } catch (err) {
@@ -47,10 +60,6 @@ const SignupForm = () => {
       password: "",
     });
   };
-
-  
-
-
 
   return (
     <>
@@ -85,7 +94,9 @@ const SignupForm = () => {
             value={userFormData.username}
             required
           />
-          <div className="invalid-feedback">Username is required!</div>
+          {usernameError && (
+            <div className="text-xs text-red-600">Username is required!</div>
+          )}
         </div>
 
         <div className="mb-4">
@@ -102,7 +113,8 @@ const SignupForm = () => {
             value={userFormData.email}
             required
           />
-          <div className="invalid-feedback">Email is required!</div>
+        {!emailValid && <div className="text-xs text-red-600">Email is required!</div>}
+
         </div>
 
         <div className="mb-4">
@@ -119,7 +131,9 @@ const SignupForm = () => {
             value={userFormData.password}
             required
           />
-          <div className="invalid-feedback">Password is required!</div>
+          {!passwordValid && (
+            <div className="text-xs text-red-600">Password is required!</div>
+          )}
         </div>
         <button
           disabled={
