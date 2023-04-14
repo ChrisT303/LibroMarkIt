@@ -46,11 +46,13 @@ const resolvers = {
             $addToSet: { savedBooks: input },
           },
           { new: true, runValidators: true }
-        );
+        ).populate('savedBooks');
+  
         return updatedUser;
       }
       throw new AuthenticationError("You need to be logged in first.");
     },
+  
   
     removeBook: async (parent, { bookId }, context) => {
       const token = context.req.headers.authorization.split(' ').pop();

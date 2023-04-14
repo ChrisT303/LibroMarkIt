@@ -10,6 +10,8 @@ import Image from "next/image";
 const SearchBooks = () => {
   const [searchedBooks, setSearchedBooks] = useState([]);
   const [searchInput, setSearchInput] = useState("");
+  const [savedBooks, setSavedBooks] = useState([]);
+
 
   const [savedBookIds, setSavedBookIds] = useState(getSavedBookIds());
 
@@ -52,27 +54,28 @@ const SearchBooks = () => {
 
   const handleSaveBook = async (bookId) => {
     const bookToSave = searchedBooks.find((book) => book.bookId === bookId);
-
+  
     const token = Auth.loggedIn() ? Auth.getToken() : null;
-
+  
     if (!token) {
       return false;
     }
     try {
-      const response = await saveBook({
+      const { data } = await saveBook({
         variables: {
           input: bookToSave,
         },
       });
-
-      if (!response) {
+  
+      if (!data) {
         throw new Error("something went wrong!");
       }
-      setSavedBookIds([...savedBookIds, bookToSave.bookId]);
+      setSavedBooks([...savedBooks, data.saveBook]);
     } catch (err) {
       console.error(err);
     }
   };
+  
 
   return (
     <>
