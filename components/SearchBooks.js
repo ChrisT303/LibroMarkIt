@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import Auth from "../server/utils/auth";
+import FeaturedBooks from "./FeaturedBooks";
 import { searchGoogleBooks } from "../server/utils/api";
 import { saveBookIds, getSavedBookIds } from "../server/utils/localStorage";
 import { useMutation } from "@apollo/client";
@@ -10,9 +11,8 @@ import Image from "next/image";
 const SearchBooks = () => {
   const [searchedBooks, setSearchedBooks] = useState([]);
   const [searchInput, setSearchInput] = useState("");
-  const [savedBooks, setSavedBooks] = useState([]);
-
-
+  // const [savedBooks, setSavedBooks] = useState([]);
+  const [featuredBooks, setFeaturedBooks] = useState([]);
   const [savedBookIds, setSavedBookIds] = useState(getSavedBookIds());
 
   const [saveBook, { error }] = useMutation(SAVE_BOOK);
@@ -20,6 +20,30 @@ const SearchBooks = () => {
   useEffect(() => {
     return () => saveBookIds(savedBookIds);
   });
+
+  useEffect(() => {
+    const fetchFeaturedBooks = async () => {
+      try {
+        const response = await searchGoogleBooks("popular");
+        if (!response.ok) {
+          throw new Error("something went wrong!");
+        }
+        const { items } = await response.json();
+        const bookData = items.map((book) => ({
+          bookId: book.id,
+          authors: book.volumeInfo.authors || ["No author to display"],
+          title: book.volumeInfo.title,
+          description: book.volumeInfo.description,
+          image: book.volumeInfo.imageLinks?.thumbnail || "",
+        }));
+        setFeaturedBooks(bookData);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchFeaturedBooks();
+  }, []);
+  
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -54,9 +78,9 @@ const SearchBooks = () => {
 
   const handleSaveBook = async (bookId) => {
     const bookToSave = searchedBooks.find((book) => book.bookId === bookId);
-  
+
     const token = Auth.loggedIn() ? Auth.getToken() : null;
-  
+
     if (!token) {
       return false;
     }
@@ -66,7 +90,7 @@ const SearchBooks = () => {
           input: bookToSave,
         },
       });
-  
+
       if (!data) {
         throw new Error("something went wrong!");
       }
@@ -75,7 +99,6 @@ const SearchBooks = () => {
       console.error(err);
     }
   };
-  
 
   return (
     <>
@@ -106,62 +129,67 @@ const SearchBooks = () => {
           </form>
         </div>
       </div>
-
+  
       <div className="container mx-auto px-4 py-8">
         <h2>
           {searchedBooks.length
             ? `Viewing ${searchedBooks.length} results:`
             : "Search for a book to begin"}
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {searchedBooks.map((book) => {
-            return (
-              <div
-                key={book.bookId}
-                className="border border-gray-700 p-4 rounded"
-              >
-                {book.image ? (
-                  <Image
-                    src={book.image}
-                    alt={`The cover for ${book.title}`}
-                    className="w-full h-48 object-cover rounded-t"
-                    width={150} 
-                    height={200} 
-                  />
-                ) : null}
-                <div className="mt-4">
-                  <h3 className="text-lg font-bold">{book.title}</h3>
-                  <p className="text-xs">Authors: {book.authors}</p>
-                  <p className="text-sm mt-2">{book.description}</p>
-                  {Auth.loggedIn() && (
-                    <button
-                      disabled={savedBookIds?.some(
-                        (savedBookId) => savedBookId === book.bookId
-                      )}
-                      className={`w-full py-2 mt-4 rounded ${
-                        savedBookIds?.some(
+        {searchedBooks.length === 0 ? (
+          <FeaturedBooks featuredBooks={featuredBooks} />
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {searchedBooks.map((book) => {
+              return (
+                <div
+                  key={book.bookId}
+                  className="border border-gray-700 p-4 rounded"
+                >
+                  {book.image ? (
+                    <Image
+                      src={book.image}
+                      alt={`The cover for ${book.title}`}
+                      className="w-full h-48 object-cover rounded-t"
+                      width={150} 
+                      height={200} 
+                    />
+                  ) : null}
+                  <div className="mt-4">
+                    <h3 className="text-lg font-bold">{book.title}</h3>
+                    <p className="text-xs">Authors: {book.authors}</p>
+                    <p className="text-sm mt-2">{book.description}</p>
+                    {Auth.loggedIn() && (
+                      <button
+                        disabled={savedBookIds?.some(
+                          (savedBookId) => savedBookId === book.bookId
+                        )}
+                        className={`w-full py-2 mt-4 rounded ${
+                          savedBookIds?.some(
+                            (savedBookId) => savedBookId === book.bookId
+                          )
+                            ? "bg-blue-500 text-white"
+                            : "bg-blue-600 text-white"
+                        }`}
+                        onClick={() => handleSaveBook(book.bookId)}
+                      >
+                        {savedBookIds?.some(
                           (savedBookId) => savedBookId === book.bookId
                         )
-                          ? "bg-blue-500 text-white"
-                          : "bg-blue-600 text-white"
-                      }`}
-                      onClick={() => handleSaveBook(book.bookId)}
-                    >
-                      {savedBookIds?.some(
-                        (savedBookId) => savedBookId === book.bookId
-                      )
-                        ? "This book has already been saved!"
-                        : "Save this Book!"}
-                    </button>
-                  )}
+                          ? "This book has already been saved!"
+                          : "Save this Book!"}
+                      </button>
+                    )}
+                  </div>
                 </div>
-              </div>
-            );
-          })}
-        </div>
+              );
+            })}
+          </div>
+        )}
       </div>
     </>
   );
+  
 };
 
 export default SearchBooks;
