@@ -105,7 +105,7 @@ const SearchBooks = () => {
 
   return (
     <>
-      <div className="bg-gray-900 text-white py-12">
+      <div className="bg-[#3A3E59] text-white py-12">
         <div className="container mx-auto px-4">
           <form onSubmit={handleFormSubmit}>
             <div className="flex flex-wrap">
@@ -122,9 +122,9 @@ const SearchBooks = () => {
               <div className="w-full md:w-1/3">
                 <button
                   type="submit"
-                  className="w-full bg-green-500 text-white py-2 mt-2 md:mt-0 md:ml-2 rounded"
+                  className="w-full bg-[#C36B84] text-white py-2 mt-2 md:mt-0 md:ml-2 rounded"
                 >
-                  Submit Search
+                  Search
                 </button>
               </div>
             </div>

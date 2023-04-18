@@ -45,7 +45,7 @@ const SavedBooks = () => {
 
   return (
     <>
-      <div className="bg-gray-900 text-white py-12">
+      <div className="bg-[#3A3E59] text-white py-12">
         <div className="container mx-auto px-4">
           <h1 className="text-center text-3xl">Your Saved Books</h1>
         </div>
@@ -79,7 +79,7 @@ const SavedBooks = () => {
                   <p className="text-xs">Authors: {book.authors}</p>
                   <p className="text-sm mt-2">{book.description}</p>
                   <button
-                    className="w-full bg-red-600 text-white py-2 mt-4 rounded"
+                    className="w-full bg-[#d11a2a] text-white py-2 mt-4 rounded"
                     onClick={() => handleDeleteBook(book.bookId)}
                   >
                     Delete Book

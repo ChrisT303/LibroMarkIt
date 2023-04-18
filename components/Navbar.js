@@ -29,11 +29,11 @@ const AppNavbar = () => {
 
   return (
     <>
-      <header className="bg-gray-900 text-gray-100">
+      <header className="bg-[#3A3E59] text-gray-100">
         <div className="container mx-auto px-4 py-3">
           <nav className="flex items-center justify-between">
             <button
-              className="text-xl font-semibold"
+              className="text-2xl font-semibold"
               onClick={() => navigate("/")}
             >
               LibroMarkit

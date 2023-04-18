@@ -35,8 +35,8 @@ const FeaturedBooks = ({ featuredBooks, handleSaveBook, savedBookIds }) => {
                       savedBookIds?.some(
                         (savedBookId) => savedBookId === book.bookId
                       )
-                        ? "bg-blue-500 text-white"
-                        : "bg-blue-600 text-white"
+                        ? "bg-[#ED6B5B] text-white"
+                        : "bg-[#F9AC66] text-white"
                     }`}
                     onClick={() => handleSaveBook(book.bookId)}
                   >
