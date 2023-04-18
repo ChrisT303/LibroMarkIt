@@ -24,7 +24,7 @@ const SearchBooks = () => {
   useEffect(() => {
     const fetchFeaturedBooks = async () => {
       try {
-        const response = await searchGoogleBooks("popular");
+        const response = await searchGoogleBooks("subject:fiction&orderBy=relevance&maxResults=10");
         if (!response.ok) {
           throw new Error("something went wrong!");
         }
@@ -43,6 +43,7 @@ const SearchBooks = () => {
     };
     fetchFeaturedBooks();
   }, []);
+  
   
 
   const handleFormSubmit = async (event) => {
