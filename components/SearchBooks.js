@@ -24,7 +24,9 @@ const SearchBooks = () => {
   useEffect(() => {
     const fetchFeaturedBooks = async () => {
       try {
-        const response = await searchGoogleBooks("subject:fiction&orderBy=relevance&maxResults=10");
+        const response = await searchGoogleBooks(
+          "subject:fiction&orderBy=relevance&maxResults=10"
+        );
         if (!response.ok) {
           throw new Error("something went wrong!");
         }
@@ -43,8 +45,6 @@ const SearchBooks = () => {
     };
     fetchFeaturedBooks();
   }, []);
-  
-  
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -78,10 +78,10 @@ const SearchBooks = () => {
   };
 
   const handleSaveBook = async (bookId) => {
-    const bookToSave = searchedBooks.find((book) => book.bookId === bookId);
-
+    const bookToSave = searchedBooks.find((book) => book.bookId === bookId) || featuredBooks.find((book) => book.bookId === bookId);
+  
     const token = Auth.loggedIn() ? Auth.getToken() : null;
-
+  
     if (!token) {
       return false;
     }
@@ -91,7 +91,7 @@ const SearchBooks = () => {
           input: bookToSave,
         },
       });
-
+  
       if (!data) {
         throw new Error("something went wrong!");
       }
@@ -100,6 +100,7 @@ const SearchBooks = () => {
       console.error(err);
     }
   };
+  
 
   return (
     <>
@@ -130,7 +131,7 @@ const SearchBooks = () => {
           </form>
         </div>
       </div>
-  
+
       <div className="container mx-auto px-4 py-8">
         <h2>
           {searchedBooks.length
@@ -138,7 +139,11 @@ const SearchBooks = () => {
             : ""}
         </h2>
         {searchedBooks.length === 0 ? (
-          <FeaturedBooks featuredBooks={featuredBooks} />
+          <FeaturedBooks
+            featuredBooks={featuredBooks}
+            handleSaveBook={handleSaveBook}
+            savedBookIds={savedBookIds}
+          />
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {searchedBooks.map((book) => {
@@ -152,8 +157,8 @@ const SearchBooks = () => {
                       src={book.image}
                       alt={`The cover for ${book.title}`}
                       className="w-full h-48 object-cover rounded-t"
-                      width={150} 
-                      height={200} 
+                      width={150}
+                      height={200}
                     />
                   ) : null}
                   <div className="mt-4">
@@ -190,7 +195,6 @@ const SearchBooks = () => {
       </div>
     </>
   );
-  
 };
 
 export default SearchBooks;

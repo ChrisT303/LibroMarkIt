@@ -1,7 +1,8 @@
 import React from "react";
+import Auth from "../server/utils/auth";
 import Image from "next/image";
 
-const FeaturedBooks = ({ featuredBooks }) => {
+const FeaturedBooks = ({ featuredBooks, handleSaveBook, savedBookIds }) => {
   return (
     <div className="container mx-auto px-4 py-8">
       <h2 className="text-2xl font-bold mb-4">Featured Books</h2>
@@ -22,6 +23,27 @@ const FeaturedBooks = ({ featuredBooks }) => {
                 <h3 className="text-lg font-bold">{book.title}</h3>
                 <p className="text-xs">Authors: {book.authors}</p>
                 <p className="text-sm mt-2">{book.description}</p>
+                {Auth.loggedIn() && (
+                  <button
+                    disabled={savedBookIds?.some(
+                      (savedBookId) => savedBookId === book.bookId
+                    )}
+                    className={`w-full py-2 mt-4 rounded ${
+                      savedBookIds?.some(
+                        (savedBookId) => savedBookId === book.bookId
+                      )
+                        ? "bg-blue-500 text-white"
+                        : "bg-blue-600 text-white"
+                    }`}
+                    onClick={() => handleSaveBook(book.bookId)}
+                  >
+                    {savedBookIds?.some(
+                      (savedBookId) => savedBookId === book.bookId
+                    )
+                      ? "This book has already been saved!"
+                      : "Save this Book!"}
+                  </button>
+                )}
               </div>
             </div>
           );
@@ -32,4 +54,5 @@ const FeaturedBooks = ({ featuredBooks }) => {
 };
 
 export default FeaturedBooks;
+
 
