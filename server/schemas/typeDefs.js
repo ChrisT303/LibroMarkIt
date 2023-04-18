@@ -1,7 +1,7 @@
-import { gql } from 'apollo-server-micro';
+import { gql } from "apollo-server-micro";
 
 const typeDefs = gql`
-type User {
+  type User {
     _id: ID
     username: String
     email: String

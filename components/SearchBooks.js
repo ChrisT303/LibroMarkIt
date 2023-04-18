@@ -78,10 +78,12 @@ const SearchBooks = () => {
   };
 
   const handleSaveBook = async (bookId) => {
-    const bookToSave = searchedBooks.find((book) => book.bookId === bookId) || featuredBooks.find((book) => book.bookId === bookId);
-  
+    const bookToSave =
+      searchedBooks.find((book) => book.bookId === bookId) ||
+      featuredBooks.find((book) => book.bookId === bookId);
+
     const token = Auth.loggedIn() ? Auth.getToken() : null;
-  
+
     if (!token) {
       return false;
     }
@@ -91,7 +93,7 @@ const SearchBooks = () => {
           input: bookToSave,
         },
       });
-  
+
       if (!data) {
         throw new Error("something went wrong!");
       }
@@ -100,13 +102,11 @@ const SearchBooks = () => {
       console.error(err);
     }
   };
-  
 
   return (
     <>
       <div className="bg-gray-900 text-white py-12">
         <div className="container mx-auto px-4">
-          <h1>Search for Books!</h1>
           <form onSubmit={handleFormSubmit}>
             <div className="flex flex-wrap">
               <div className="w-full md:w-2/3 mb-2 md:mb-0">

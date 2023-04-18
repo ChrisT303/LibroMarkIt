@@ -18,7 +18,6 @@ const authLink = setContext((_, { headers }) => {
   const token =
     typeof window !== "undefined" ? localStorage.getItem("id_token") : null;
   const authorization = token ? `Bearer ${token}` : "";
-  console.log("Authorization:", authorization); // log authorization
   return {
     headers: {
       ...(headers || {}),

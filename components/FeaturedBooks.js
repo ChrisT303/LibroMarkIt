@@ -9,7 +9,10 @@ const FeaturedBooks = ({ featuredBooks, handleSaveBook, savedBookIds }) => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {featuredBooks.map((book) => {
           return (
-            <div key={book.bookId} className="border border-gray-700 p-4 rounded">
+            <div
+              key={book.bookId}
+              className="border border-gray-700 p-4 rounded"
+            >
               {book.image ? (
                 <Image
                   src={book.image}
@@ -40,7 +43,7 @@ const FeaturedBooks = ({ featuredBooks, handleSaveBook, savedBookIds }) => {
                     {savedBookIds?.some(
                       (savedBookId) => savedBookId === book.bookId
                     )
-                      ? "This book has already been saved!"
+                      ? "Book Saved!"
                       : "Save this Book!"}
                   </button>
                 )}
@@ -54,5 +57,3 @@ const FeaturedBooks = ({ featuredBooks, handleSaveBook, savedBookIds }) => {
 };
 
 export default FeaturedBooks;
-
-

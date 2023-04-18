@@ -97,32 +97,34 @@ const LoginForm = () => {
             required
           />
           {!emailValid && (
-            <div className="text-xs text-red-600">Please enter a valid email!</div>
+            <div className="text-xs text-red-600">
+              Please enter a valid email!
+            </div>
           )}
         </div>
-  
+
         <div className="mt-4">
-      <label
-        htmlFor="password"
-        className="block text-sm font-bold text-gray-700"
-      >
-        Password
-      </label>
-      <input
-        className={`w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline ${
-          validated && !passwordValid ? "border-red-500" : ""
-        }`}
-        type="password"
-        placeholder="Your password"
-        name="password"
-        onChange={handleInputChange}
-        value={userFormData.password}
-        required
-      />
-      {!passwordValid && (
-        <div className="text-xs text-red-600">Password is required!</div>
-      )}
-    </div>
+          <label
+            htmlFor="password"
+            className="block text-sm font-bold text-gray-700"
+          >
+            Password
+          </label>
+          <input
+            className={`w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline ${
+              validated && !passwordValid ? "border-red-500" : ""
+            }`}
+            type="password"
+            placeholder="Your password"
+            name="password"
+            onChange={handleInputChange}
+            value={userFormData.password}
+            required
+          />
+          {!passwordValid && (
+            <div className="text-xs text-red-600">Password is required!</div>
+          )}
+        </div>
         <button
           className={`mt-4 ${
             !(emailValid && userFormData.password)
@@ -130,8 +132,6 @@ const LoginForm = () => {
               : "bg-green-500 hover:bg-green-700"
           } text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline`}
           disabled={!(emailValid && userFormData.password)}
-         
-  
           type="submit"
         >
           Submit

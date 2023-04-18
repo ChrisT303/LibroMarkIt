@@ -1,8 +1,7 @@
-import decode from 'jwt-decode';
-import jwt from 'jsonwebtoken';
+import decode from "jwt-decode";
+import jwt from "jsonwebtoken";
 
-
-const JWT_SECRET = process.env.JWT_SECRET; 
+const JWT_SECRET = process.env.JWT_SECRET;
 
 class AuthService {
   getProfile() {
@@ -11,7 +10,7 @@ class AuthService {
 
   loggedIn() {
     const token = this.getToken();
-    return !!token && !this.isTokenExpired(token); 
+    return !!token && !this.isTokenExpired(token);
   }
 
   isTokenExpired(token) {
@@ -26,27 +25,27 @@ class AuthService {
   }
 
   getToken() {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('id_token');
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("id_token");
     }
     return null;
   }
 
   login(idToken) {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('id_token', idToken);
-      window.location.assign('/');
+    if (typeof window !== "undefined") {
+      localStorage.setItem("id_token", idToken);
+      window.location.assign("/");
     }
   }
 
   logout() {
-    if (typeof window !== 'undefined') {
-      localStorage.removeItem('id_token');
-      window.location.assign('/');
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("id_token");
+      window.location.assign("/");
     }
   }
   signToken(userData) {
-    const token = jwt.sign({ data: userData }, JWT_SECRET, { expiresIn: '1h' });
+    const token = jwt.sign({ data: userData }, JWT_SECRET, { expiresIn: "1h" });
     return token;
   }
   verifyToken(token) {
@@ -58,10 +57,8 @@ class AuthService {
       return null;
     }
   }
-
-
 }
 
-const authService = new AuthService(); 
+const authService = new AuthService();
 
-export default authService; 
+export default authService;

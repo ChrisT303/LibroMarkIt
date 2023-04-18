@@ -28,7 +28,9 @@ const SignupForm = () => {
     setUserFormData({ ...userFormData, [name]: value });
 
     if (name === "email") {
-      setEmailValid(value.trim().length > 0 && value.includes("@") && value.includes("."));
+      setEmailValid(
+        value.trim().length > 0 && value.includes("@") && value.includes(".")
+      );
     } else if (name === "password") {
       setPasswordValid(value.trim().length > 0);
     } else if (name === "username" && value.trim().length > 0) {
