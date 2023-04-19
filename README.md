@@ -2,7 +2,8 @@
 
 LibroMarkit is a book search app that allows users to browse featured books, search for specific books, and save them to a personalized saved books list. This project is built using Next.js, GraphQL, MongoDB, and Tailwind CSS, and utilizes the Google Books API for book data.
 
-![LibroMarkit Screenshot](![LibroMarkiit_screenshot](https://user-images.githubusercontent.com/103149149/233176595-b93eceeb-210b-4b68-9e16-4db4e5bf3605.png))
+![LibroMarkiit_screenshot](https://user-images.githubusercontent.com/103149149/233176828-6158ae06-81eb-43af-b649-d302045c7e34.png)
+
 
 ## Table of Contents
 
